@@ -87,7 +87,7 @@ int main()
 
 	for (i = 1; i < 10; i++) // build a new linked list
 		insertNode(&head, 0, i);
-        
+
 	// duplicateReverse(): question 4
 	printf("\n");
 	printList(head);
@@ -234,22 +234,20 @@ int removeNode2(LinkedList *ll, int index)
 
 int duplicateReverse(ListNode *head, ListNode **ptrNewHead)
 {
+	if (head == NULL || head->next == NULL)
+		return -1;
 	ListNode *prev = NULL;
-	ListNode *next = NULL;
 	ListNode *curr = head;
-	// empty list
-	if (curr == NULL) return -1;
-
-	// create new list
+	ListNode *next = NULL;
+	// create a new linkedList
 	int index = 0;
 	while (curr != NULL)
 	{
-		insertNode(ptrNewHead, index, curr->num);
-		index++;
+		insertNode(ptrNewHead, index++, curr->num);
 		curr = curr->next;
 	}
 
-	// reverse new list
+	// reverse linkedList
 	curr = *ptrNewHead;
 	while (curr != NULL)
 	{
@@ -257,8 +255,7 @@ int duplicateReverse(ListNode *head, ListNode **ptrNewHead)
 		curr->next = prev;
 		prev = curr;
 		curr = next;
-	} 
+	}
 	*ptrNewHead = prev;
-	return 0;
+	return 1;
 }
-
