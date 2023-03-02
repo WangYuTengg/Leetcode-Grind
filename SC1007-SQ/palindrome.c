@@ -7,31 +7,35 @@
 
 //////////////////////////////////   linked list //////////////////////////////////////////////
 
-typedef struct _listnode{
+typedef struct _listnode
+{
 	int item;
 	struct _listnode *next;
 } ListNode;
 
-typedef struct _linkedlist{
+typedef struct _linkedlist
+{
 	int size;
 	ListNode *head;
 	ListNode *tail;
 } LinkedList;
 
 ////////////////////////////////// stack    //////////////////////////////////////////////
-typedef struct stack{
+typedef struct stack
+{
 	LinkedList ll;
 } Stack;
 
 //////////////////////////////////// queue ////////////////////////////////////////////
 
-typedef struct _queue{
+typedef struct _queue
+{
 	LinkedList ll;
 } Queue;
 
 ////////////////////////////////////////////////////////////////////////////////
 void printList(ListNode *head);
-ListNode * findNode(LinkedList *ll, int index);
+ListNode *findNode(LinkedList *ll, int index);
 int insertNode(LinkedList *ll, int index, int value);
 int removeNode(LinkedList *ll, int index);
 
@@ -59,71 +63,90 @@ int main()
 {
 	Stack s;
 	Queue q;
-	int item[] = { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 };
+	int item[] = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1};
 	int i;
 	char *word1 = "A man a plan a canal Panama";
 	char *word2 = "Superman in the sky";
-	char *word3 = "";
+	char *word3 = "abba";
 	char *word4 = " ";
+	char *word5 = "";
+	char *word6 = "x";
 
-	//for question 3
+	// for question 3
 	palindrome(word1); //*word1="A man a plan a canal Panama";
-	palindrome(word2);// *word2="Superman in the sky";
+	palindrome(word2); // *word2="Superman in the sky";
 	palindrome(word3);
 	palindrome(word4);
+	palindrome(word5);
+	palindrome(word6);
 }
 
 ////////////////////////////////////////////////////////////
-//Question 3
+// Question 3
 
-int palindrome(char *word){
-	Stack  s;
-	s.ll.head = s.ll.tail = NULL;
-	s.ll.size = 0;
-
-	Queue  q;
-	q.ll.head = q.ll.tail = NULL;
-	q.ll.size = 0;
-	
+int palindrome(char *word)
+{
 	// edge cases
-	if (strlen(word) == 1){
-		printf(" is a palindrome \n");
-		return 0;
-	};
-	if (strlen(word) == 0) {
-		printf(" not a palindrome \n");
+	if (strlen(word) == 0)
+	{
+		printf("Empty string\n");
 		return -1;
 	}
 
-	int index = 0;
-	while (word[index] != '\0')
+	if (strlen(word) == 1)
 	{
-		if(word[index] != ' '){
-			int c = tolower(word[index]);
-			enqueue(&q, c);
-			push(&s, c);
-		} 
-		index++;
+		if (word[0] == ' ')
+		{
+			printf("Empty string\n");
+			return -1;
+		}
+		printf("%s --- is a palindrome\n", word);
+		return 0;
 	}
 
-	while (!isEmptyQueue(&q))
+	Stack s;
+	s.ll.size = 0;
+	s.ll.head = s.ll.tail = NULL;
+
+	Queue q;
+	q.ll.size = 0;
+	q.ll.head = q.ll.tail = NULL;
+
+	// push word to queue and stack
+	int pos = 0;
+	while (word[pos] != '\0')
 	{
-		if(dequeue(&q) != pop(&s)) {
-			printf("%s --- not a palindrome\n",word);
+		if (word[pos] != ' ')
+		{
+			int c = tolower(word[pos]);
+			enqueue(&q, c);
+			push(&s, c);
+		}
+		pos++;
+	}
+
+	// pop from stack and queue to check if palindrome , stack is first letter, queue is last letter
+	while (!isEmptyStack(&s))
+	{
+		if (pop(&s) != dequeue(&q))
+		{
+			printf("%s --- not a palindrome\n", word);
 			return -1;
 		}
 	}
-	printf("%s --- is a palindrome\n", word);
+	printf("%s --- IS a palindrome\n", word);
 	return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void push(Stack *s, int item){
+void push(Stack *s, int item)
+{
 	insertNode(&(s->ll), 0, item);
 }
 
-int pop(Stack *s){
+int pop(Stack *s)
+{
 	int item;
 
 	item = ((s->ll).head)->item;
@@ -131,55 +154,60 @@ int pop(Stack *s){
 	return item;
 }
 
-int peek(Stack *s){
+int peek(Stack *s)
+{
 	return ((s->ll).head)->item;
 }
 
-int isEmptyStack(Stack *s){
+int isEmptyStack(Stack *s)
+{
 	if ((s->ll).size == 0)
 		return 1;
 	return 0;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
 
-void enqueue(Queue *q, int item){
+void enqueue(Queue *q, int item)
+{
 	insertNode(&(q->ll), q->ll.size, item);
 }
 
-int dequeue(Queue *q){
+int dequeue(Queue *q)
+{
 	int item;
 	item = ((q->ll).head)->item;
 	removeNode(&(q->ll), 0);
 	return item;
 }
 
-int isEmptyQueue(Queue *q){
+int isEmptyQueue(Queue *q)
+{
 	if ((q->ll).size == 0)
 		return 1;
 	return 0;
 }
 
-
-
 ////////////////////////////////////////////////////////////////////////////////
 
-void printList(ListNode *head){
+void printList(ListNode *head)
+{
 
 	ListNode *temp = head;
 
 	if (temp == NULL)
 		return;
 
-	while (temp != NULL){
+	while (temp != NULL)
+	{
 		printf("%d ", temp->item);
 		temp = temp->next;
 	}
 	printf("\n");
 }
 
-ListNode * findNode(LinkedList *ll, int index){
+ListNode *findNode(LinkedList *ll, int index)
+{
 
 	ListNode *temp;
 
@@ -191,7 +219,8 @@ ListNode * findNode(LinkedList *ll, int index){
 	if (temp == NULL || index < 0)
 		return NULL;
 
-	while (index > 0){
+	while (index > 0)
+	{
 		temp = temp->next;
 		if (temp == NULL)
 			return NULL;
@@ -201,7 +230,8 @@ ListNode * findNode(LinkedList *ll, int index){
 	return temp;
 }
 
-int insertNode(LinkedList *ll, int index, int value){
+int insertNode(LinkedList *ll, int index, int value)
+{
 
 	ListNode *pre, *cur;
 
@@ -209,7 +239,8 @@ int insertNode(LinkedList *ll, int index, int value){
 		return -1;
 
 	// If empty list or inserting first node, need to update head pointer
-	if (ll->head == NULL || index == 0){
+	if (ll->head == NULL || index == 0)
+	{
 		cur = ll->head;
 		ll->head = malloc(sizeof(ListNode));
 		ll->tail = ll->head;
@@ -220,7 +251,8 @@ int insertNode(LinkedList *ll, int index, int value){
 	}
 
 	// Inserting as new last node
-	if (index == ll->size){
+	if (index == ll->size)
+	{
 		pre = ll->tail;
 		cur = pre->next;
 		pre->next = malloc(sizeof(ListNode));
@@ -233,7 +265,8 @@ int insertNode(LinkedList *ll, int index, int value){
 
 	// Find the nodes before and at the target position
 	// Create a new node and reconnect the links
-	if ((pre = findNode(ll, index - 1)) != NULL){
+	if ((pre = findNode(ll, index - 1)) != NULL)
+	{
 		cur = pre->next;
 		pre->next = malloc(sizeof(ListNode));
 
@@ -249,7 +282,8 @@ int insertNode(LinkedList *ll, int index, int value){
 	return -1;
 }
 
-int removeNode(LinkedList *ll, int index){
+int removeNode(LinkedList *ll, int index)
+{
 
 	ListNode *pre, *cur;
 
@@ -258,7 +292,8 @@ int removeNode(LinkedList *ll, int index){
 		return -1;
 
 	// If removing first node, need to update head pointer
-	if (index == 0){
+	if (index == 0)
+	{
 		cur = ll->head->next;
 		free(ll->head);
 		ll->head = cur;
@@ -272,15 +307,18 @@ int removeNode(LinkedList *ll, int index){
 
 	// Find the nodes before and after the target position
 	// Free the target node and reconnect the links
-	if ((pre = findNode(ll, index - 1)) != NULL){
+	if ((pre = findNode(ll, index - 1)) != NULL)
+	{
 
 		// Removing the last node, update the tail pointer
-		if (index == ll->size - 1){
+		if (index == ll->size - 1)
+		{
 			ll->tail = pre;
 			free(pre->next);
 			pre->next = NULL;
 		}
-		else{
+		else
+		{
 			cur = pre->next->next;
 			free(pre->next);
 			pre->next = cur;

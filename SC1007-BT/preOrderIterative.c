@@ -85,22 +85,30 @@ int main()
 
 void preOrderIterative(BSTNode *root)
 {
-    BSTNode *temp = root;
-    if (temp == NULL)
-        return;
+    // pre-order -> root then left then right -> iteratively traversed using stack
     Stack s;
     s.top = NULL;
-
-    push(&s, temp);
-    while (!isEmpty(&s))
+    if (root == NULL)
+        return;
+    else
     {
-        temp = pop(&s);
-        printf("%d ", temp->item);
-        // right then left
-        if (temp->right != NULL)
-            push(&s, temp->right);
-        if (temp->left != NULL)
-            push(&s, temp->left);
+        BSTNode *curr = root;
+        // push root into stack
+        push(&s, curr);
+        while (!isEmpty(&s))
+        {
+            curr = pop(&s);
+            printf("%d ", curr->item);
+            // push right first so that left is processed first
+            if (curr->right != NULL)
+            {
+                push(&s, curr->right);
+            }
+            if (curr->left != NULL)
+            {
+                push(&s, curr->left);
+            }
+        }
     }
 }
 

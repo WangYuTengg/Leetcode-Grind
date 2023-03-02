@@ -85,13 +85,16 @@ int main()
 
 void levelOrderTraversal(BSTNode *root)
 {
+    // level by level BFS from left to right iteratively using a queue
     Queue q;
     q.head = q.tail = NULL;
     BSTNode *temp = root;
 
+    // empty tree
     if (temp == NULL)
         return;
 
+    // pop root node into queue
     enqueue(&q.head, &q.tail, temp);
     while (!isEmpty(q.head))
     {

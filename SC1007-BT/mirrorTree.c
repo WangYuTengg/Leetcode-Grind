@@ -81,9 +81,10 @@ void mirrorTree(BTNode *node)
     if (node == NULL)
         return;
 
-    //
+    // recursively call on left and right subtree
     mirrorTree(node->left);
     mirrorTree(node->right);
+    // mirroring logic
     temp = node->left;
     node->left = node->right;
     node->right = temp;

@@ -74,16 +74,21 @@ int main(int argc, const char *argv[])
 
 int smallestValue(BTNode *node)
 {
+    int MAX = 100000;
     if (node == NULL)
-        return 100000;
-
+        return MAX;
     int min = node->item;
     int l = smallestValue(node->left);
     int r = smallestValue(node->right);
+    // check against current node FIRST
     if (l < min && l < r)
+    {
         return l;
-    else if (r < min && r < l)
+    }
+    if (r < min && r < l)
+    {
         return r;
+    }
     else
         return min;
 }

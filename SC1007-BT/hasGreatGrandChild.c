@@ -60,6 +60,21 @@ int main(int argc, const char *argv[])
 
 int hasGreatGrandchild(BTNode *node)
 {
+	if (node == NULL)
+	{
+		return -1;
+	}
+	int l = hasGreatGrandchild(node->left);
+	int r = hasGreatGrandchild(node->right);
+	if (r > 1)
+	{
+		l = r;
+	}
+	if (l > 1)
+	{
+		printf("%d ", node->item);
+	}
+	return l + 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

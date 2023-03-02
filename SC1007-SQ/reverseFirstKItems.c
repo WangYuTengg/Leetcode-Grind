@@ -121,17 +121,22 @@ int main()
 void reverseFirstKItems(Queue *q, int k)
 {
     Stack s;
-    s.ll.size = 0;
     s.ll.head = s.ll.tail = NULL;
-
-    if (q->ll.size == 0 || q->ll.size == 1)
+    s.ll.size = 0;
+    if (q->ll.size == 0 || q->ll.head == NULL || k > q->ll.size || k < 0)
         return;
     for (int i = 0; i < k; i++)
+    {
         push(&s, dequeue(q));
-    while (!isEmptyStack(&s))
+    }
+    while (isEmptyStack(&s))
+    {
         enqueue(q, pop(&s));
+    }
     for (int i = 0; i < q->ll.size - k; i++)
+    {
         enqueue(q, dequeue(q));
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

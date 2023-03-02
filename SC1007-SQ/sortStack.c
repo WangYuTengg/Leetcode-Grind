@@ -105,14 +105,13 @@ int main()
 void sortStack(Stack *s)
 {
     Stack temp;
-    temp.ll.size = 0;
     temp.ll.head = temp.ll.tail = NULL;
+    temp.ll.size = 0;
 
     while (!isEmptyStack(s))
     {
         push(&temp, pop(s));
     }
-
     while (!isEmptyStack(&temp))
     {
         int item = pop(&temp);

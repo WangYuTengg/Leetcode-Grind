@@ -106,12 +106,16 @@ int main()
 
 BTNode *searchNode(BTNode *node, int key)
 {
-    BTNode *temp = NULL;
+    BTNode *temp = NULL; // default value for temp
     if (node == NULL)
-        return NULL;
+        return NULL; // empty node
     if (node->item == key)
-        return node;
+        return node; // found the node
+
+    // recur down left tree
     temp = searchNode(temp->left, key);
+
+    // if value not down left tree, recur down right tree
     if (temp == NULL)
         temp = searchNode(temp->right, key);
 

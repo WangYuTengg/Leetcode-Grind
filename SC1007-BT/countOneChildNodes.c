@@ -96,17 +96,17 @@ int countOneChildNodes(BTNode *node)
 {
     if (node == NULL)
         return 0;
-    if (node->right == NULL && node->left != NULL)
+    if (node->left != NULL && node->right != NULL)
     {
-        return countOneChildNodes(node->left) + 1;
+        return countOneChildNodes(node->left) + countOneChildNodes(node->right);
     }
-    else if (node->right != NULL && node->left == NULL)
+    if (node->left == NULL && node->right == NULL)
     {
-        return countOneChildNodes(node->right) + 1;
+        return 0;
     }
     else
     {
-        return countOneChildNodes(node->right) + countOneChildNodes(node->left);
+        return 1 + countOneChildNodes(node->left) + countOneChildNodes(node->right);
     }
 }
 
