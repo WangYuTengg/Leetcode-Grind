@@ -42,6 +42,18 @@ int knapSack(int C, int sizes[], int values[], int n)
         }
     }
 
+    printf("Selected items (index, size, value): ");
+    w = C;
+    for (int i = n; i > 0; i--)
+    {
+        if (M[i][w] != M[i - 1][w]) // The current item was included
+        {
+            printf("(%d, %d, %d) ", i - 1, sizes[i - 1], values[i - 1]);
+            w -= sizes[i - 1];
+        }
+    }
+    printf("\n");
+
     // return last cell for maximum value
     return M[n][C];
 }
